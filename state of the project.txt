@@ -1,0 +1,8 @@
+state of the project:
+git repo made
+
+next step:
+a python file that turns csv into:
+a json file
+trimming data length as needed (current length is 300 for each match)
+rps -> up/down/stay depending on win/lose/tie
