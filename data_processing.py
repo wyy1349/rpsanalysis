@@ -2,12 +2,10 @@ import csv
 import pandas as pd
 import numpy as np
 
-<<<<<<< Updated upstream
 with open('rps_v1_data.csv', newline='') as csvfile:
     spamreader = csv.reader(csvfile, delimiter=' ', quotechar='|')
     for row in spamreader:
         print(', '.join(row))
-=======
 #Open the csv file using pandas
 df = pd.read_csv('rps_v1_data.csv')
 #Concatenate game_id and player_id columns to create a unique identifier 
@@ -20,8 +18,6 @@ df = df.drop(['game_id', 'player_id', 'round_begin_ts', 'player_rt', 'player_out
 #Create a dictionary of dataframes, one for each game_player_id
 df_dict = {k: v for k, v in df.groupby('game_player_id')}
 
->>>>>>> Stashed changes
-    
 #use pandas to extract the correct columns from csv file
 
 #helper function: convert a sequence of two plays to "UP", "DOWN", "STAY"
