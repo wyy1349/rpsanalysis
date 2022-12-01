@@ -2,6 +2,13 @@ import csv
 import pandas as pd
 import numpy as np
 
+<<<<<<< Updated upstream
+=======
+with open('rps_v1_data.csv', newline='') as csvfile:
+    spamreader = csv.reader(csvfile, delimiter=' ', quotechar='|')
+    for row in spamreader:
+        print(', '.join(row))
+>>>>>>> Stashed changes
 #Open the csv file using pandas
 df = pd.read_csv('rps_v1_data.csv')
 #Concatenate game_id and player_id columns to create a unique identifier 
@@ -13,7 +20,21 @@ df = df.drop(['game_id', 'player_id', 'round_begin_ts', 'player_rt', 'player_out
 
 #Create a dictionary of dataframes, one for each game_player_id
 df_dict = {k: v for k, v in df.groupby('game_player_id')}
+<<<<<<< Updated upstream
 
+=======
+#For each df in df_dict
+for key in df_dict:
+    #Count the number of rows
+    n = df_dict[key].shape[0]
+    #Count the number of rows where player_outcome = win
+    w = df_dict[key][df_dict[key]['player_outcome'] == 'win'].shape[0]
+    pct = w/(n*100)
+    #If pct is less than 55%, drop the df from df_dict
+    if pct < 0.55:
+        del df_dict[key]
+    
+>>>>>>> Stashed changes
 #use pandas to extract the correct columns from csv file
 
 #helper function: convert a sequence of two plays to "UP", "DOWN", "STAY"
