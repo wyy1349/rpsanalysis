@@ -2,10 +2,6 @@ import csv
 import pandas as pd
 import numpy as np
 
-with open('rps_v1_data.csv', newline='') as csvfile:
-    spamreader = csv.reader(csvfile, delimiter=' ', quotechar='|')
-    for row in spamreader:
-        print(', '.join(row))
 #Open the csv file using pandas
 df = pd.read_csv('rps_v1_data.csv')
 #Concatenate game_id and player_id columns to create a unique identifier 
