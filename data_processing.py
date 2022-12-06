@@ -10,6 +10,8 @@ df['player_id'] = df['player_id'].astype(str)
 df['game_player_id'] = df['game_id'] + df['player_id']
 #Drop the game_id and player_id columns
 df = df.drop(['game_id', 'player_id', 'round_begin_ts', 'player_rt', 'player_outcome_viewtime'], axis=1)
+#Drop the rows where player_outcome is empty
+df = df.dropna(subset=['player_outcome'])
 
 #Create a dictionary of dataframes, one for each game_player_id
 df_dict = {k: v for k, v in df.groupby('game_player_id')}
@@ -68,4 +70,3 @@ for key in winner_dict:
     filenum += 1
     with open(filename, 'w') as f:
         winner_dict[key].to_csv(f, header=False)
-
