@@ -1,0 +1,2 @@
+var testData = csv.read('rps_v1_data.csv');
+console.log(testData)
