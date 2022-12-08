@@ -89,4 +89,7 @@ for key in winner_dict:
             single_array.append(player_outcome[0].upper() + uds[0])
     #Append the single_array to all_winners_array
     all_winners_array.append(single_array)
-print(all_winners_array)
+
+#Save the all_winners_array to a text file
+with open('all_winners_array.txt', 'w') as f:
+    f.write(str(all_winners_array))
