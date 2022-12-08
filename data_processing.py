@@ -76,8 +76,11 @@ for key in winner_dict:
 all_winners_array = []
 for key in winner_dict:
     single_array = []
+    #Make the dataframe index start at 0
+    winner_dict[key].reset_index(drop=True, inplace=True)
     #Loop through the rows of the dataframe
     for index, row in winner_dict[key].iterrows():
+        
         #Get the player_outcome of the current row and the uds of the next row
         if index < winner_dict[key].shape[0] - 1:
             player_outcome = winner_dict[key].iloc[index]['player_outcome']
