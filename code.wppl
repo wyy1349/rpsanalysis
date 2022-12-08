@@ -15,21 +15,27 @@ var flipstates = function (states, cumstatespriors) {
     else if(cumstatespriors[0] <= n && n < cumstatespriors[1]){
         return states[1];
     }
-    else if(cumstatespriors[1] <= n && n < cumstatespriors[2]):
+    else if(cumstatespriors[1] <= n && n < cumstatespriors[2]){
         return states[2];
-    else if(cumstatespriors[2] <= n && n < cumstatespriors[3]):
+    }
+    else if(cumstatespriors[2] <= n && n < cumstatespriors[3]){
         return states[3];
-    else if(cumstatespriors[3] <= n && n < cumstatespriors[4]):
+    }
+    else if(cumstatespriors[3] <= n && n < cumstatespriors[4]){
         return states[4];
-    else if(cumstatespriors[4] <= n && n < cumstatespriors[5]):
+    }
+    else if(cumstatespriors[4] <= n && n < cumstatespriors[5]){
         return states[5];
-    else if(cumstatespriors[5] <= n && n < cumstatespriors[6]):
+    }
+    else if(cumstatespriors[5] <= n && n < cumstatespriors[6]){
         return states[6];
-    else if(cumstatespriors[6] <= n && n < cumstatespriors[7]):
+    }
+    else if(cumstatespriors[6] <= n && n < cumstatespriors[7]){
         return states[7];
-    else if(cumstatespriors[7] <= n && n <= cumstatespriors[8]):
+    }
+    else if(cumstatespriors[7] <= n && n <= cumstatespriors[8]){
         return states[8];
-    };
+    }
 }
 
 console.log(flipstates(possiblestates, cumstatespriors))
