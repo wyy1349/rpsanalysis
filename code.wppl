@@ -1,6 +1,6 @@
-//to run webppl files: webppl code.wppl --require webppl-csv
-//TODO: Figure out how to import text files, then import all_winners_array.txt
-var testData = csv.read('rps_v1_data.csv');
+//to run webppl files: webppl code.wppl --require webppl-json
+
+var testData = json.read('all_winners_array.json');
 //console.log(testData)
 
 var possiblestates = ["WU","WD","WS","LU","LD","LS","TU","TD","TS"];
