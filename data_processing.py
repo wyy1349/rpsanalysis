@@ -63,10 +63,27 @@ for key in winner_dict:
     winner_dict[key].insert(0,"uds",uds_seq)
 
 #write it into csv
-
+'''
 filenum = 0
 for key in winner_dict:
     filename = "csvs/processed_data_" + str(filenum) + ".csv"
     filenum += 1
     with open(filename, 'w') as f:
         winner_dict[key].to_csv(f, header=False)
+'''
+# We generate an array with round results and actions taken based on it.
+# This means that we take the win/lose of a round and the action taken in the NEXT round
+all_winners_array = []
+for key in winner_dict:
+    single_array = []
+    #Loop through the rows of the dataframe
+    for index, row in winner_dict[key].iterrows():
+        #Get the player_outcome of the current row and the uds of the next row
+        if index < winner_dict[key].shape[0] - 1:
+            player_outcome = winner_dict[key].iloc[index]['player_outcome']
+            uds = winner_dict[key].iloc[index+1]['uds']
+            #Append the first letter of player_outcome and uds to the single_array, capitalize the first letter of player_outcome
+            single_array.append(player_outcome[0].upper() + uds[0])
+    #Append the single_array to all_winners_array
+    all_winners_array.append(single_array)
+print(all_winners_array)
