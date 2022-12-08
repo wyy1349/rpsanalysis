@@ -1,2 +1,10 @@
+//to run webppl files: 
+
 var testData = csv.read('rps_v1_data.csv');
-console.log(testData)
+//console.log(testData)
+
+var getRandomInt = function (max) {
+  return Math.floor(Math.random() * max);
+}
+
+console.log(getRandomInt(3))
