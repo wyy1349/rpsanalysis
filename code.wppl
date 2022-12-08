@@ -1,10 +1,13 @@
-//to run webppl files: 
+//to run webppl files: webppl code.wppl --require webppl-csv
 
 var testData = csv.read('rps_v1_data.csv');
 //console.log(testData)
 
-var getRandomInt = function (max) {
-  return Math.floor(Math.random() * max);
+var possiblestates = ["WU","WD","WS","LU","LD","LS","TU","TD","TS"];
+
+var flipstates = function (states) {
+    var max = states.length
+    return states[Math.floor(Math.random() * max)];
 }
 
-console.log(getRandomInt(3))
+console.log(flipstates(possiblestates))
