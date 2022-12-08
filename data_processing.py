@@ -1,6 +1,7 @@
 import csv
 import pandas as pd
 import numpy as np
+import json
 
 #Open the csv file using pandas
 df = pd.read_csv('rps_v1_data.csv')
@@ -90,6 +91,12 @@ for key in winner_dict:
     #Append the single_array to all_winners_array
     all_winners_array.append(single_array)
 
+'''
 #Save the all_winners_array to a text file
 with open('all_winners_array.txt', 'w') as f:
     f.write(str(all_winners_array))
+'''
+
+#Save the all_winners_array to a json file
+with open('all_winners_array.json', 'w') as f:
+    json.dump(all_winners_array, f)
