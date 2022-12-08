@@ -1,5 +1,5 @@
 //to run webppl files: webppl code.wppl --require webppl-csv
-
+//TODO: Figure out how to import text files, then import all_winners_array.txt
 var testData = csv.read('rps_v1_data.csv');
 //console.log(testData)
 
