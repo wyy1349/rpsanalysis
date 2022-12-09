@@ -1,6 +1,6 @@
 //to run webppl files: webppl code.wppl --require webppl-json
 
-var testData = json.read('all_winners_array.json');
+//var testData = json.read('all_winners_array.json');
 //console.log(testData)
 
 var possiblestates = ["WU","WD","WS","LU","LD","LS","TU","TD","TS"];
@@ -39,4 +39,18 @@ var flipstates = function (states, cumstatespriors) {
     }
 }
 
-console.log(flipstates(possiblestates, cumstatespriors))
+var n = 10; //match length of the thing
+var catpriors = Categorical({vs: possiblestates, ps: statespriors})
+//console.log(catpriors)
+var generateFrom = function(sequenceSoFar, n) {
+    var nextstate = sample(catpriors)
+    var sequence = sequenceSoFar.concat(nextstate)
+    if(sequence.length >= n) {
+        return sequence
+    } else {
+        return generateFrom(sequence, n)
+    }
+}
+console.log("Sequence: " + generateFrom([],10))
+
+//console.log(flipstates(possiblestates, cumstatespriors))
