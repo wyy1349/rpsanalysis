@@ -97,7 +97,19 @@ for winner in all_winners_array:
     new_action_dict = {k:v/len(winner) for k, v in action_dict.items()}
     all_trans_mat.append(new_action_dict)
 
+def avg_mat(all_mat):
+    mat = {}
+    for key in all_mat[0]:
+        mat[key] = 0
+    for one_mat in all_mat:
+        for key in mat:
+            mat[key] += one_mat.get(key,0)
+    for key in mat:
+        mat[key] = mat[key]/len(all_mat)
+    return mat
+
 print(all_trans_mat)
+print(avg_mat(all_trans_mat))
 
 '''
 #Save the all_winners_array to a text file
