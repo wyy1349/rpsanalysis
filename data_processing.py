@@ -2,6 +2,7 @@ import csv
 import pandas as pd
 import numpy as np
 import json
+from collections import Counter
 
 #Open the csv file using pandas
 df = pd.read_csv('rps_v1_data.csv')
@@ -54,7 +55,7 @@ def last_n_rows(n):
         if winner_dict[key].shape[0] > n:
             winner_dict[key] = winner_dict[key].tail(n)
 
-last_n_rows(100)
+#last_n_rows(100)
 
 for key in winner_dict:
     uds_seq = compare_seq(winner_dict[key]['player_move'].tolist())
@@ -80,8 +81,7 @@ for key in winner_dict:
     #Make the dataframe index start at 0
     winner_dict[key].reset_index(drop=True, inplace=True)
     #Loop through the rows of the dataframe
-    for index, row in winner_dict[key].iterrows():
-        
+    for index, row in winner_dict[key].iterrows():        
         #Get the player_outcome of the current row and the uds of the next row
         if index < winner_dict[key].shape[0] - 1:
             player_outcome = winner_dict[key].iloc[index]['player_outcome']
@@ -90,6 +90,14 @@ for key in winner_dict:
             single_array.append(player_outcome[0].upper() + uds[0])
     #Append the single_array to all_winners_array
     all_winners_array.append(single_array)
+
+all_trans_mat = []
+for winner in all_winners_array:
+    action_dict = Counter(winner)
+    new_action_dict = {k:v/len(winner) for k, v in action_dict.items()}
+    all_trans_mat.append(new_action_dict)
+
+print(all_trans_mat)
 
 '''
 #Save the all_winners_array to a text file
