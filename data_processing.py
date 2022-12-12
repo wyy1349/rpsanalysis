@@ -2,6 +2,7 @@ import csv
 import pandas as pd
 import numpy as np
 import json
+import sklearn
 from collections import Counter
 import matplotlib.pyplot as plt
 
@@ -114,16 +115,25 @@ def avg_mat(all_mat):
         mat[key] = mat[key]/len(all_mat)
     return mat
 
+
+# #clustering
+# from sklearn.cluster import KMeans
+# kmeans = KMeans(n_clusters=4)
+# kmeans.fit(all_trans_mat)
+# y_kmeans = kmeans.predict(all_trans_mat)
+# print(y_kmeans)
+
 print(all_trans_mat)
-print(avg_mat(all_trans_mat))
+avgmat = avg_mat(all_trans_mat)
 
 all_trans_mat_np = []
 for m in all_trans_mat:
     arr = np.array([[m['WU'],m['WD'],m['WS']],[m['LU'],m['LD'],m['LS']],[m['TU'],m['TD'],m['TS']]])
     all_trans_mat_np.append(arr)
 
-for a in all_trans_mat_np:
-    plt.imshow(a, cmap='hot', interpolation='nearest')
+for idx, a in enumerate(all_trans_mat_np):
+    plt.imshow(a, cmap='hot')
+    plt.imsave('imgs/heatmap_player_'+str(idx)+'.png',a)
 plt.show()
 
 
