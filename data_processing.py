@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import json
 import sklearn
+import matplotlib as mpl
 from collections import Counter
 import matplotlib.pyplot as plt
 
@@ -132,9 +133,12 @@ for m in all_trans_mat:
     all_trans_mat_np.append(arr)
 
 for idx, a in enumerate(all_trans_mat_np):
-    plt.imshow(a, cmap='hot')
-    plt.imsave('imgs/heatmap_player_'+str(idx)+'.png',a)
+    #cmap = mpl.colors.ListedColormap(['white', 'red'])
+    plt.imshow(a, cmap='hot', vmin=0, vmax=0.4)
+    plt.imsave('imgs/heatmap_player_'+str(idx)+'.png',a, cmap='hot',vmin=0, vmax=0.4)
+plt.colorbar()
 plt.show()
+
 
 
 
