@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import json
 from collections import Counter
+import matplotlib.pyplot as plt
 
 #Open the csv file using pandas
 df = pd.read_csv('rps_v1_data.csv')
@@ -115,6 +116,18 @@ def avg_mat(all_mat):
 
 print(all_trans_mat)
 print(avg_mat(all_trans_mat))
+
+all_trans_mat_np = []
+for m in all_trans_mat:
+    arr = np.array([[m['WU'],m['WD'],m['WS']],[m['LU'],m['LD'],m['LS']],[m['TU'],m['TD'],m['TS']]])
+    all_trans_mat_np.append(arr)
+
+for a in all_trans_mat_np:
+    plt.imshow(a, cmap='hot', interpolation='nearest')
+plt.show()
+
+
+
 
 '''
 #Save the all_winners_array to a text file
