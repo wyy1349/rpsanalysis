@@ -87,7 +87,9 @@ for key in winner_dict:
             player_outcome = winner_dict[key].iloc[index]['player_outcome']
             uds = winner_dict[key].iloc[index+1]['uds']
             #Append the first letter of player_outcome and uds to the single_array, capitalize the first letter of player_outcome
-            single_array.append(player_outcome[0].upper() + uds[0])
+            state = player_outcome[0].upper() + uds[0]
+            if 'N' not in state:
+                single_array.append(player_outcome[0].upper() + uds[0])
     #Append the single_array to all_winners_array
     all_winners_array.append(single_array)
 
@@ -95,6 +97,9 @@ all_trans_mat = []
 for winner in all_winners_array:
     action_dict = Counter(winner)
     new_action_dict = {k:v/len(winner) for k, v in action_dict.items()}
+    for key in new_action_dict:
+        if 'N' in key:
+            print(winner.index(key), all_winners_array.index(winner))
     all_trans_mat.append(new_action_dict)
 
 def avg_mat(all_mat):
