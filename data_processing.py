@@ -3,9 +3,9 @@ import pandas as pd
 import numpy as np
 import json
 #import sklearn
-import matplotlib as mpl
 from collections import Counter
 import matplotlib.pyplot as plt
+import random
 
 #Open the csv file using pandas
 df = pd.read_csv('rps_v1_data.csv')
@@ -152,17 +152,23 @@ kmeans5 = KMeans(n_clusters=5)
 kmeans5.fit(all_trans_mat_clus)
 y_kmeans5 = kmeans5.predict(all_trans_mat_clus)
 print(y_kmeans5)
+y_kmeans5_dict = {id:cat for id, cat in enumerate(y_kmeans5)}
+print(y_kmeans5_dict)
 
 '''
 kmeans4 = KMeans(n_clusters=4)
 kmeans4.fit(all_trans_mat_clus)
 y_kmeans4 = kmeans4.predict(all_trans_mat_clus)
 print(y_kmeans4)
+y_kmeans4_dict = {id:cat for id, cat in enumerate(y_kmeans4)}
+print(y_kmeans4_dict)
 
 kmeans3 = KMeans(n_clusters=3)
 kmeans3.fit(all_trans_mat_clus)
 y_kmeans3 = kmeans3.predict(all_trans_mat_clus)
 print(y_kmeans3)
+y_kmeans3_dict = {id:cat for id, cat in enumerate(y_kmeans3)}
+print(y_kmeans3_dict)
 
 
 
@@ -170,6 +176,13 @@ print(y_kmeans3)
 with open('all_winners_array.txt', 'w') as f:
     f.write(str(all_winners_array))
 
+
+# def compete(player1:dict, player2:dict, num_rounds:int):
+#     options = ("rock", "paper", "scissors")
+#     log = [] #each entry is (p1action, p2action, p1outcome "WLT", p2outcome "WLT")
+#     starting1 = random.choice(options)
+#     for i in range(num_rounds):
+        
 
 #Save the all_winners_array to a json file
 with open('all_winners_array.json', 'w') as f:
