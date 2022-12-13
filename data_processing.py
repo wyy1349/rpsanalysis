@@ -155,6 +155,22 @@ print(y_kmeans5)
 y_kmeans5_dict = {id:cat for id, cat in enumerate(y_kmeans5)}
 print(y_kmeans5_dict)
 
+list_0 = [all_trans_mat_np[key] for key, value in y_kmeans5_dict.items() if value == 0]
+list_1 = [all_trans_mat_np[key] for key, value in y_kmeans5_dict.items() if value == 1]
+list_2 = [all_trans_mat_np[key] for key, value in y_kmeans5_dict.items() if value == 2]
+list_3 = [all_trans_mat_np[key] for key, value in y_kmeans5_dict.items() if value == 3]
+list_4 = [all_trans_mat_np[key] for key, value in y_kmeans5_dict.items() if value == 4]
+list_all = [list_0, list_1, list_2, list_3, list_4]
+av_all = [np.average(l, axis=None) for l in list_all]
+
+av_dict_list = []
+for av in av_all:
+    av_dict = {}
+    av_dict['W'] = av[0]
+    av_dict['L'] = av[1]
+    av_dict['T'] = av[2]
+    av_dict_list.append(av_dict)
+
 '''
 kmeans4 = KMeans(n_clusters=4)
 kmeans4.fit(all_trans_mat_clus)
