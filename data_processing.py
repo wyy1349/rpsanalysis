@@ -175,12 +175,42 @@ print(y_kmeans3_dict)
 with open('all_winners_array.txt', 'w') as f:
     f.write(str(all_winners_array))
 '''
+reverseres = {"paper":{"U":"scissors","D":"rock","S":"paper"},
+                "rock":{"U":"paper","D":"scissors","S":"rock"},
+                "scissors":{"U":"rock","D":"paper","S":"scissors"}}
 
-# def compete(player1:dict, player2:dict, num_rounds:int):
-#     options = ("rock", "paper", "scissors")
-#     log = [] #each entry is (p1action, p2action, p1outcome "WLT", p2outcome "WLT")
-#     starting1 = random.choice(options)
-#     for i in range(num_rounds):
+def playernextaction(player:dict, lastaction, lastresult):
+    udsaction = random.choice(("U","D","S"),player[lastresult])
+    actualact = reverseres[lastaction][udsaction]
+    return actualact
+
+
+def compete(player1:dict, player2:dict, num_rounds:int):
+    options = ("rock", "paper", "scissors")
+    log = [] #each entry is (p1action, p2action, p1outcome "WLT", p2outcome "WLT")
+    p1actionlog = []
+    p2actionlog = []
+    p1outcomelog = []
+    p2outcomelog = []
+    
+    starting1 = random.choice(options)
+    starting2 = random.choice(options)
+    p1actionlog.append(starting1)
+    p2actionlog.append(starting2)
+    p1outcomelog.append(res[p1actionlog[-1]][p2actionlog[-1]][0])
+    p2outcomelog.append(res[p2actionlog[-1]][p1actionlog[-1]][0])
+
+    for i in range(num_rounds):
+        p1action = playernextaction(player1, p1actionlog[-1], p1outcomelog[-1])
+        p2action = playernextaction(player2, p2actionlog[-1], p2outcomelog[-1])
+        p1actionlog.append(p1action)
+        p2actionlog.append(p2action)
+        p1outcomelog.append(res[p1actionlog[-1]][p2actionlog[-1]][0])
+        p2outcomelog.append(res[p2actionlog[-1]][p1actionlog[-1]][0])
+    
+    log = list(zip(p1actionlog, p2actionlog, p1outcomelog, p2outcomelog))
+    return log
+        
         
 
 #Save the all_winners_array to a json file
