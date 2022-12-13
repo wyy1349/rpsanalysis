@@ -160,8 +160,9 @@ list_1 = [all_trans_mat_np[key] for key, value in y_kmeans5_dict.items() if valu
 list_2 = [all_trans_mat_np[key] for key, value in y_kmeans5_dict.items() if value == 2]
 list_3 = [all_trans_mat_np[key] for key, value in y_kmeans5_dict.items() if value == 3]
 list_4 = [all_trans_mat_np[key] for key, value in y_kmeans5_dict.items() if value == 4]
+
 list_all = [list_0, list_1, list_2, list_3, list_4]
-av_all = [np.average(l, axis=None) for l in list_all]
+av_all = [np.average(l, keepdims=True) for l in list_all]
 
 av_dict_list = []
 for av in av_all:
