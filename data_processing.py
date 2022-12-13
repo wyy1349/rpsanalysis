@@ -184,7 +184,6 @@ def playernextaction(player:dict, lastaction, lastresult):
     actualact = reverseres[lastaction][udsaction]
     return actualact
 
-
 def compete(player1:dict, player2:dict, num_rounds:int):
     options = ("rock", "paper", "scissors")
     log = [] #each entry is (p1action, p2action, p1outcome "WLT", p2outcome "WLT")
@@ -209,9 +208,21 @@ def compete(player1:dict, player2:dict, num_rounds:int):
         p2outcomelog.append(res[p2actionlog[-1]][p1actionlog[-1]][0])
     
     log = list(zip(p1actionlog, p2actionlog, p1outcomelog, p2outcomelog))
-    return log
+    return log    
         
-        
+def maketournament(playerlist, num_rounds):
+    num_players = len(playerlist)
+    scores = np.zeros((num_players,num_players))
+    for i in range(num_players):
+        for j in range(i+1,num_players):
+            log = compete(playerlist[i], playerlist[j], num_rounds)
+            p1score = (sum([1 if x[2]=="W" else 0 for x in log])/num_rounds, sum([1 if x[2]=="L" else 0 for x in log])/num_rounds, sum([1 if x[2]=="T" else 0 for x in log])/num_rounds)
+            p2score = (sum([1 if x[3]=="W" else 0 for x in log])/num_rounds, sum([1 if x[3]=="L" else 0 for x in log])/num_rounds, sum([1 if x[3]=="T" else 0 for x in log])/num_rounds)
+            scores[i,j] = p1score
+            scores[j,i] = p2score
+    print(scores)
+    return scores
+
 
 #Save the all_winners_array to a json file
 with open('all_winners_array.json', 'w') as f:
