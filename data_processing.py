@@ -153,6 +153,7 @@ kmeans5.fit(all_trans_mat_clus)
 y_kmeans5 = kmeans5.predict(all_trans_mat_clus)
 print(y_kmeans5)
 
+'''
 kmeans4 = KMeans(n_clusters=4)
 kmeans4.fit(all_trans_mat_clus)
 y_kmeans4 = kmeans4.predict(all_trans_mat_clus)
@@ -164,12 +165,13 @@ y_kmeans3 = kmeans3.predict(all_trans_mat_clus)
 print(y_kmeans3)
 
 
-'''
+
 #Save the all_winners_array to a text file
 with open('all_winners_array.txt', 'w') as f:
     f.write(str(all_winners_array))
-'''
+
 
 #Save the all_winners_array to a json file
 with open('all_winners_array.json', 'w') as f:
     json.dump(all_winners_array, f)
+'''
