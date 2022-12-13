@@ -119,50 +119,45 @@ def avg_mat(all_mat):
 
 
 
-print(all_trans_mat)
+#print(all_trans_mat)
 avgmat = avg_mat(all_trans_mat)
-print(avgmat)
+#print(avgmat)
 
 all_trans_mat_np = []
 for m in all_trans_mat:
     arr = np.array([[m['WU'],m['WD'],m['WS']],[m['LU'],m['LD'],m['LS']],[m['TU'],m['TD'],m['TS']]])
     all_trans_mat_np.append(arr)
 
-for idx, a in enumerate(all_trans_mat_np):
-    #cmap = mpl.colors.ListedColormap(['white', 'red'])
-    plt.imshow(a, cmap='hot', vmin=0, vmax=0.4)
-    new_a = np.zeros(np.array(a.shape) * 100)
+# for idx, a in enumerate(all_trans_mat_np):
+#     #cmap = mpl.colors.ListedColormap(['white', 'red'])
+#     plt.imshow(a, cmap='hot', vmin=0, vmax=0.4)
+#     new_a = np.zeros(np.array(a.shape) * 100)
 
-    for j in range(a.shape[0]):
-        for k in range(a.shape[1]):
-            new_a[j * 100: (j+1) * 100, k * 100: (k+1) * 100] = a[j, k]
-    plt.imsave('imgs/heatmap_player_'+str(idx)+'.png',new_a, cmap='hot',vmin=0, vmax=0.4)
-plt.colorbar()
-plt.show()
+#     for j in range(a.shape[0]):
+#         for k in range(a.shape[1]):
+#             new_a[j * 100: (j+1) * 100, k * 100: (k+1) * 100] = a[j, k]
+#     plt.imsave('imgs/heatmap_player_'+str(idx)+'.png',new_a, cmap='hot',vmin=0, vmax=0.4)
+# plt.colorbar()
+# plt.show()
 
 #clustering
 all_trans_mat_clus = []
 for m_np in all_trans_mat_np:
     all_trans_mat_clus.append(m_np.flatten())
 all_trans_mat_clus = np.array(all_trans_mat_clus)
-print(all_trans_mat_clus.shape)
+#print(all_trans_mat_clus.shape)
 
 from sklearn.cluster import KMeans
 kmeans5 = KMeans(n_clusters=5)
 kmeans5.fit(all_trans_mat_clus)
 y_kmeans5 = kmeans5.predict(all_trans_mat_clus)
-print(y_kmeans5)
+#print(y_kmeans5)
 y_kmeans5_dict = {id:cat for id, cat in enumerate(y_kmeans5)}
-print(y_kmeans5_dict)
+#print(y_kmeans5_dict)
 
-list_0 = [all_trans_mat_np[key] for key, value in y_kmeans5_dict.items() if value == 0]
-list_1 = [all_trans_mat_np[key] for key, value in y_kmeans5_dict.items() if value == 1]
-list_2 = [all_trans_mat_np[key] for key, value in y_kmeans5_dict.items() if value == 2]
-list_3 = [all_trans_mat_np[key] for key, value in y_kmeans5_dict.items() if value == 3]
-list_4 = [all_trans_mat_np[key] for key, value in y_kmeans5_dict.items() if value == 4]
-
-list_all = [list_0, list_1, list_2, list_3, list_4]
-av_all = [np.average(l, keepdims=True) for l in list_all]
+#averaging within each cluster to get a prototypical x-playstyle player
+list_all = [[all_trans_mat_np[key] for key, value in y_kmeans5_dict.items() if value == i] for i in range(5)]
+av_all = [np.mean(l, axis=0) for l in list_all]
 
 av_dict_list = []
 for av in av_all:
@@ -171,6 +166,7 @@ for av in av_all:
     av_dict['L'] = av[1]
     av_dict['T'] = av[2]
     av_dict_list.append(av_dict)
+
 
 '''
 kmeans4 = KMeans(n_clusters=4)
@@ -198,7 +194,7 @@ reverseres = {"paper":{"U":"scissors","D":"rock","S":"paper"},
                 "scissors":{"U":"rock","D":"paper","S":"scissors"}}
 
 def playernextaction(player:dict, lastaction, lastresult):
-    udsaction = random.choice(("U","D","S"),player[lastresult])
+    udsaction = random.choices(("U","D","S"),weights=player[lastresult],k=1)[0]
     actualact = reverseres[lastaction][udsaction]
     return actualact
 
@@ -230,7 +226,7 @@ def compete(player1:dict, player2:dict, num_rounds:int):
         
 def maketournament(playerlist, num_rounds):
     num_players = len(playerlist)
-    scores = np.zeros((num_players,num_players))
+    scores = np.zeros((num_players,num_players,3))
     for i in range(num_players):
         for j in range(i+1,num_players):
             log = compete(playerlist[i], playerlist[j], num_rounds)
@@ -238,8 +234,10 @@ def maketournament(playerlist, num_rounds):
             p2score = (sum([1 if x[3]=="W" else 0 for x in log])/num_rounds, sum([1 if x[3]=="L" else 0 for x in log])/num_rounds, sum([1 if x[3]=="T" else 0 for x in log])/num_rounds)
             scores[i,j] = p1score
             scores[j,i] = p2score
-    print(scores)
     return scores
+
+scoreboard = maketournament(av_dict_list, 1000)
+print(scoreboard)
 
 
 #Save the all_winners_array to a json file
