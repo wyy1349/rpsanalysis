@@ -2,7 +2,7 @@ import csv
 import pandas as pd
 import numpy as np
 import json
-import sklearn
+#import sklearn
 import matplotlib as mpl
 from collections import Counter
 import matplotlib.pyplot as plt
@@ -131,7 +131,12 @@ for m in all_trans_mat:
 for idx, a in enumerate(all_trans_mat_np):
     #cmap = mpl.colors.ListedColormap(['white', 'red'])
     plt.imshow(a, cmap='hot', vmin=0, vmax=0.4)
-    plt.imsave('imgs/heatmap_player_'+str(idx)+'.png',a, cmap='hot',vmin=0, vmax=0.4)
+    new_a = np.zeros(np.array(a.shape) * 100)
+
+    for j in range(a.shape[0]):
+        for k in range(a.shape[1]):
+            new_a[j * 100: (j+1) * 100, k * 100: (k+1) * 100] = a[j, k]
+    plt.imsave('imgs/heatmap_player_'+str(idx)+'.png',new_a, cmap='hot',vmin=0, vmax=0.4)
 plt.colorbar()
 plt.show()
 
