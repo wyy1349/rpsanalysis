@@ -117,15 +117,11 @@ def avg_mat(all_mat):
     return mat
 
 
-# #clustering
-# from sklearn.cluster import KMeans
-# kmeans = KMeans(n_clusters=4)
-# kmeans.fit(all_trans_mat)
-# y_kmeans = kmeans.predict(all_trans_mat)
-# print(y_kmeans)
+
 
 print(all_trans_mat)
 avgmat = avg_mat(all_trans_mat)
+print(avgmat)
 
 all_trans_mat_np = []
 for m in all_trans_mat:
@@ -139,8 +135,28 @@ for idx, a in enumerate(all_trans_mat_np):
 plt.colorbar()
 plt.show()
 
+#clustering
+all_trans_mat_clus = []
+for m_np in all_trans_mat_np:
+    all_trans_mat_clus.append(m_np.flatten())
+all_trans_mat_clus = np.array(all_trans_mat_clus)
+print(all_trans_mat_clus.shape)
 
+from sklearn.cluster import KMeans
+kmeans5 = KMeans(n_clusters=5)
+kmeans5.fit(all_trans_mat_clus)
+y_kmeans5 = kmeans5.predict(all_trans_mat_clus)
+print(y_kmeans5)
 
+kmeans4 = KMeans(n_clusters=4)
+kmeans4.fit(all_trans_mat_clus)
+y_kmeans4 = kmeans4.predict(all_trans_mat_clus)
+print(y_kmeans4)
+
+kmeans3 = KMeans(n_clusters=3)
+kmeans3.fit(all_trans_mat_clus)
+y_kmeans3 = kmeans3.predict(all_trans_mat_clus)
+print(y_kmeans3)
 
 
 '''
