@@ -241,6 +241,5 @@ print(scoreboard)
 
 
 #Save the all_winners_array to a json file
-with open('all_winners_array.json', 'w') as f:
-    json.dump(all_winners_array, f)
-
+#with open('all_winners_array.json', 'w') as f:
+#    json.dump(all_winners_array, f)
