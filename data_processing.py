@@ -153,7 +153,7 @@ kmeans5.fit(all_trans_mat_clus)
 y_kmeans5 = kmeans5.predict(all_trans_mat_clus)
 #print(y_kmeans5)
 y_kmeans5_dict = {id:cat for id, cat in enumerate(y_kmeans5)}
-#print(y_kmeans5_dict)
+print("grouping", y_kmeans5_dict)
 
 #averaging within each cluster to get a prototypical x-playstyle player
 list_all = [[all_trans_mat_np[key] for key, value in y_kmeans5_dict.items() if value == i] for i in range(5)]
@@ -236,9 +236,46 @@ def maketournament(playerlist, num_rounds):
             scores[j,i] = p2score
     return scores
 
-scoreboard = maketournament(av_dict_list, 1000)
-print(scoreboard)
 
+def makentournaments(playerlist, num_rounds, num_tournaments):
+    num_players = len(playerlist)
+    scoreboards = np.zeros((num_tournaments,num_players,num_players,3))
+    for i in range(num_tournaments):
+        scoreboards[i] = maketournament(playerlist, num_rounds)
+    return scoreboards
+
+scoreboards = makentournaments(av_dict_list, 1000, 25)
+tournament_avg = np.mean(scoreboards, axis=0) #shape is nxnx3
+
+#get a board of binary win/losses from the scoreboard
+#apply this to individual scoreboards to get the win/losses from individual tournaments
+#apply this to tournament average to see who beats who on average
+def winboard(scoreboard):
+    num_players = scoreboard.shape[0]
+    winboard = np.zeros((num_players,num_players))
+    for i in range(num_players):
+        for j in range(i+1,num_players):
+            if scoreboard[i,j,0] > scoreboard[j,i,0]:
+                winboard[i,j] = 1
+            elif scoreboard[i,j,0] < scoreboard[j,i,0]:
+                winboard[j,i] = 1
+            elif scoreboard[i,j,0] == scoreboard[j,i,0]:
+                winboard[i,j] = 0.5
+                winboard[j,i] = 0.5
+
+    return winboard
+
+print("final winboard", winboard(tournament_avg))
+
+def cumwinboard(scoreboards):
+    num_tournaments = scoreboards.shape[0]
+    num_players = scoreboards.shape[1]
+    cumwinboard = np.zeros((num_players,num_players))
+    for i in range(num_tournaments):
+        cumwinboard += winboard(scoreboards[i])
+    return cumwinboard
+
+print("cumulative winboard", cumwinboard(scoreboards))
 
 #Save the all_winners_array to a json file
 #with open('all_winners_array.json', 'w') as f:
