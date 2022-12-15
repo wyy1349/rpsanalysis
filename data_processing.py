@@ -155,8 +155,10 @@ y_kmeans5 = kmeans5.predict(all_trans_mat_clus)
 y_kmeans5_dict = {id:cat for id, cat in enumerate(y_kmeans5)}
 print("grouping", y_kmeans5_dict)
 
+fixed_dict = {0: 0, 1: 4, 2: 0, 3: 0, 4: 0, 5: 0, 6: 4, 7: 4, 8: 4, 9: 1, 10: 0, 11: 4, 12: 0, 13: 1, 14: 0, 15: 4, 16: 0, 17: 0, 18: 4, 19: 4, 20: 2, 21: 4, 22: 3, 23: 0, 24: 1, 25: 3, 26: 3, 27: 3, 28: 0, 29: 4}
+
 #averaging within each cluster to get a prototypical x-playstyle player
-list_all = [[all_trans_mat_np[key] for key, value in y_kmeans5_dict.items() if value == i] for i in range(5)]
+list_all = [[all_trans_mat_np[key] for key, value in fixed_dict.items() if value == i] for i in range(5)]
 av_all = [np.mean(l, axis=0) for l in list_all]
 
 av_dict_list = []
