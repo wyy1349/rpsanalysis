@@ -1,6 +1,0 @@
-state of the project:
-data is processed
-
-next step:
-install wppl csv
-build model
